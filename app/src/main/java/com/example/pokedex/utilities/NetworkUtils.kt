@@ -2,6 +2,9 @@ package com.example.pokedex.utilities
 
 import android.net.Uri
 import android.util.Log
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -18,5 +21,13 @@ class NetworkUtils {
 
         Log.d(TAG, "Built Uri" + url)
         return url!!
+    }
+
+    @Throws(IOException::class)
+    fun getResponseFromHttpUrl(url: URL): String {
+        var urlConnection: HttpURLConnection = URL(HttpURLConnection).openConnection() as HttpURLConnection
+        try {
+            var _in: InputStream = urlConnection.inputStream.bufferedReader().readText()
+        }
     }
 }
