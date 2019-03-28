@@ -13,14 +13,20 @@ class NetworkUtils {
     val POKEMON_INFO: String = "pokemon"
     var TAG: String? = NetworkUtils::class.java.simpleName
 
-    fun buildURL(pokeID: String): URL {
-        var buildUri: Uri = Uri.parse(POKEMON_API_BASE_URL).buildUpon().appendPath(POKEMON_INFO).appendPath(pokeID).build()
-        var url: URL? = null
+    fun buildURL(pokeID: String, needId: Boolean): URL {
+        lateinit var url: URL
+
+        val buildUri: Uri = if(needId && pokeID != "") {
+            Uri.parse(POKEMON_API_BASE_URL).buildUpon().appendPath(POKEMON_INFO).appendPath(pokeID).build()
+        } else {
+            Uri.parse(POKEMON_API_BASE_URL).buildUpon().appendPath(POKEMON_INFO).build()
+        }
 
         try{ url = URL(buildUri.toString()) } catch (e: MalformedURLException) { e.printStackTrace() }
 
-        Log.d(TAG, "Built Uri" + url)
-        return url!!
+        Log.d(TAG, "Build Uri" + url)
+
+        return url
     }
 
     @Throws(IOException::class)
@@ -33,7 +39,7 @@ class NetworkUtils {
 
                 scanner.useDelimiter("\\A")
 
-                var hasInput: Boolean = scanner.hasNext()
+                val hasInput: Boolean = scanner.hasNext()
 
                 return if(hasInput) {
                     scanner.next()

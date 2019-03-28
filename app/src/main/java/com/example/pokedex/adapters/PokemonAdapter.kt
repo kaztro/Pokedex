@@ -41,33 +41,6 @@ class PokemonAdapter(val items: List<Pokemon>) : RecyclerView.Adapter<PokemonAda
         }
     }
 
-    class FetchPokemonTask() : AsyncTask<String, Void, String>() {
 
-        lateinit var result_tv: TextView
-
-        override fun doInBackground(vararg pokemonNumbers: String?): String? {
-            if(pokemonNumbers.isEmpty()) return null
-
-            var ID: String? = pokemonNumbers[0]
-
-            val pokeAPI: URL = NetworkUtils().buildURL(ID!!)
-
-            try {
-                var result: String? = NetworkUtils().getResponseFromHttpUrl(pokeAPI);
-                return result;
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return ""
-            }
-        }
-
-        override fun onPostExecute(pokemonInfo: String?) {
-            if(pokemonInfo != null || pokemonInfo != "") {
-                result_tv.setText(pokemonInfo)
-            } else {
-                result_tv.setText("Fallexd")
-            }
-        }
-    }
 
 }

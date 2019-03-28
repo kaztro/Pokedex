@@ -1,12 +1,21 @@
 package com.example.pokedex
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import com.example.pokedex.adapters.PokemonAdapter
 import com.example.pokedex.models.Pokemon
+import com.example.pokedex.utilities.NetworkUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.IOException
+import java.net.URL
+import com.example.pokedex.MainActivity.FetchPokemonTask
+import android.os.AsyncTask.execute
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,11 +27,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initRecycler()
+
+        FetchPokemonTask().execute()
     }
 
     fun initRecycler() {
 
-        var pokemon: MutableList<Pokemon> = MutableList(100) {i ->
+        var pokemon: MutableList<Pokemon> = MutableList(964) {i ->
             Pokemon(i, "Name " + i, "Type " + i)
         }
 
@@ -33,6 +44,44 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
+        }
+    }
+
+    class FetchPokemonTask() : AsyncTask<String, Void, String>() {
+
+        lateinit var result_tv: TextView
+
+        override fun doInBackground(vararg pokemonNumbers: String?): String? {
+            if(pokemonNumbers.isEmpty()) {
+                val pokeAPI: URL = NetworkUtils().buildURL("", false)
+
+                return try {
+                    var result: String? = NetworkUtils().getResponseFromHttpUrl(pokeAPI)
+                    result
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    ""
+                }
+            } else {
+                var ID: String? = pokemonNumbers[0]
+                val pokeAPI: URL = NetworkUtils().buildURL(ID!!, false)
+
+                return try {
+                    var result: String? = NetworkUtils().getResponseFromHttpUrl(pokeAPI)
+                    result
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    ""
+                }
+            }
+        }
+
+        override fun onPostExecute(pokemonInfo: String?) {
+            if(pokemonInfo != null || pokemonInfo != "") {
+                result_tv.setText(pokemonInfo)
+            } else {
+                result_tv.setText("Fallexd")
+            }
         }
     }
 }
