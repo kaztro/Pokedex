@@ -12,9 +12,6 @@ import com.example.pokedex.utilities.NetworkUtils
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.IOException
 import java.net.URL
-import com.example.pokedex.MainActivity.FetchPokemonTask
-import android.os.AsyncTask.execute
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -26,15 +23,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initRecycler()
-
         FetchPokemonTask().execute()
     }
 
-    fun initRecycler() {
+    fun initRecycler(pokemonInfo: String?) {
 
         var pokemon: MutableList<Pokemon> = MutableList(964) {i ->
-            Pokemon(i, "Name " + i, "Type " + i)
+            Pokemon(i, "Name " + pokemonInfo, "Type " + "Lolito FDZ")
         }
 
         viewManager = LinearLayoutManager(this)
@@ -47,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    class FetchPokemonTask() : AsyncTask<String, Void, String>() {
+    class FetchPokemonTask : AsyncTask<String, Void, String>() {
 
         lateinit var result_tv: TextView
 
@@ -78,9 +73,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(pokemonInfo: String?) {
             if(pokemonInfo != null || pokemonInfo != "") {
-                result_tv.setText(pokemonInfo)
+                MainActivity().initRecycler(pokemonInfo)
             } else {
-                result_tv.setText("Fallexd")
+                result_tv.setText("I've Failed you momxd")
             }
         }
     }

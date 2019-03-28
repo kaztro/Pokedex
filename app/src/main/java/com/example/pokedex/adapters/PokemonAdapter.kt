@@ -1,7 +1,5 @@
 package com.example.pokedex.adapters
 
-import android.os.AsyncTask
-import android.provider.Settings.Global.getString
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.pokedex.R
 import com.example.pokedex.models.Pokemon
-import com.example.pokedex.utilities.NetworkUtils
 import kotlinx.android.synthetic.main.list_element_pokemon.view.*
-import java.io.IOException
-import java.net.URL
 
 class PokemonAdapter(val items: List<Pokemon>) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
 
