@@ -1,17 +1,12 @@
 package com.example.pokedex
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.widget.TextView
 import com.example.pokedex.adapters.PokemonAdapter
 import com.example.pokedex.models.Pokemon
-import com.example.pokedex.utilities.NetworkUtils
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.IOException
-import java.net.URL
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,13 +18,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        FetchPokemonTask().execute()
+        initRecycler()
+
+        //FetchPokemonTask().execute()
     }
 
-    fun initRecycler(pokemonInfo: String?) {
+    private fun initRecycler() {
+        //FetchPokemonTask().execute()
 
-        var pokemon: MutableList<Pokemon> = MutableList(964) {i ->
-            Pokemon(i, "Name " + pokemonInfo, "Type " + "Lolito FDZ")
+        val pokemon: MutableList<Pokemon> = MutableList(100) { i ->
+            Pokemon(i, "Name $i", "Type $i")
         }
 
         viewManager = LinearLayoutManager(this)
@@ -41,10 +39,8 @@ class MainActivity : AppCompatActivity() {
             adapter = viewAdapter
         }
     }
-
+/*
     class FetchPokemonTask : AsyncTask<String, Void, String>() {
-
-        lateinit var result_tv: TextView
 
         override fun doInBackground(vararg pokemonNumbers: String?): String? {
             if(pokemonNumbers.isEmpty()) {
@@ -73,10 +69,15 @@ class MainActivity : AppCompatActivity() {
 
         override fun onPostExecute(pokemonInfo: String?) {
             if(pokemonInfo != null || pokemonInfo != "") {
-                MainActivity().initRecycler(pokemonInfo)
+                sendIt(pokemonInfo)
             } else {
-                result_tv.setText("I've Failed you momxd")
+                println("I've failed you mom")
             }
         }
-    }
+
+        fun sendIt(pokeInfo: String?): String? {
+            return pokeInfo
+        }
+    }*/
+
 }

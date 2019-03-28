@@ -9,7 +9,7 @@ import com.example.pokedex.R
 import com.example.pokedex.models.Pokemon
 import kotlinx.android.synthetic.main.list_element_pokemon.view.*
 
-class PokemonAdapter(val items: List<Pokemon>) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
+class PokemonAdapter(private val items: List<Pokemon>) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
 
     private var countViews: Int = 0
 
@@ -35,7 +35,5 @@ class PokemonAdapter(val items: List<Pokemon>) : RecyclerView.Adapter<PokemonAda
             tv_pokemon_type.text = item.type
         }
     }
-
-
 
 }
