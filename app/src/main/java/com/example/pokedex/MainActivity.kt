@@ -8,7 +8,7 @@ import com.example.pokedex.adapters.PokemonAdapter
 import com.example.pokedex.models.Pokemon
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+//Empezare a tratar de hacer los fragentos
 class MainActivity : AppCompatActivity() {
 
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
